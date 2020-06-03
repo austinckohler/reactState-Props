@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import CharacterContainer from "./components/charactercontainer";
+import NavBar from "./components/navbar";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const rmURL = "https:rickandmortyapi.com/api/character";
+
+class App extends Component {
+  state = {
+    characters: [],
+  };
+
+  componentDidMount() {
+    fetch(rmURL)
+      .then((response) => response.json())
+      .then((data) => this.setState({ characters: data.results }));
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <NavBar />
+
+        <div className="App">
+          <CharacterContainer
+            characters={this.state.characters}
+            key={this.state.id}
+          />
+        </div>
+      </React.Fragment>
+    );
+  }
 }
-
 export default App;
